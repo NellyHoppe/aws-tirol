@@ -79,6 +79,11 @@ let drawStations = function(geojson) {
 // Temperaturdaten
 let drawTemperature = function(geojson) {
     L.geoJson(geojson, {
+        filter: function(geoJsonPoint) {
+            if (geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50) {
+                return true;
+            }
+        },
         pointToLayer: function(geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
