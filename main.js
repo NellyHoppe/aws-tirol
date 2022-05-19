@@ -104,11 +104,12 @@ let drawTemperature = function(geojson) {
                 (${geoJsonPoint.geometry.coordinates[2]} m ü.d.M.)
             `;
             let color = getColor(geoJsonPoint.properties.LT, COLORS.temperature);
-            console.log(geoJsonPoint.properties.TL, color);
+            console.log(geoJsonPoint.properties.LT, color);
+
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
-                    html: `<span>${geoJsonPoint.properties.LT.toFixed(1)}</span>`
+                    html: `<span style="background-color:${color}">${geoJsonPoint.properties.LT.toFixed(1)}</span>`
                 })
             }).bindPopup(popup);
         }
