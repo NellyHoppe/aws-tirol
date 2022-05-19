@@ -92,5 +92,41 @@ const COLORS = {
             max:2000,
             color: "#cd0feb",
         }, 
+    ],
+    wind: [
+        {
+            min: -100,
+            max: -0.000001, 
+            color: "#ffffff"
+        },        
+            {
+            min: 0,
+            max: 5,
+            color: "#ffff64"
+        }, {
+            min: 5.1,
+            max: 10,
+            color: "#c8ff64"
+        }, {
+            min: 10.1,
+            max: 20,
+            color: "#96ff96"
+        }, {
+            min: 20.1,
+            max: 40,
+            color: "#32c8ff"
+        }, {
+            min: 40.1,
+            max: 60,
+            color: "#6496ff"
+        }, {
+            min: 60.1,
+            max: 80,
+            color: "#9664ff"
+        }, {
+            min: 80.1,
+            max: 100000,
+            color: "#ff3232"
+        }
     ]
 }
