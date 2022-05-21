@@ -53,30 +53,61 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 // diesen layer beim Laden anzeigen
-overlays.wind.addTo(map);
+overlays.stations.addTo(map);
 
 // Farben nach Wert und Schwellen ermitteln
-let getColor = function(value, ramp) {
+let getColor = function (value, ramp) {
     // console.log(ramp); 
     for (let rule of ramp) {
         // console.log(rule)
-        if (value >= rule.min && value < rule.max) {
+        if (value >= rule.min && value <= rule.max) {
             return rule.color;
         }
     }
 };
 // console.log(getColor(-40, COLORS.temperature));
 
+// undefined Werte aussortieren
+
+
 // Wetterstationen mit Icons und Popup
-let drawStations = function(geojson) {
+let drawStations = function (geojson) {
     L.geoJson(geojson, {
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
+            console.log(typeof (geoJsonPoint.properties.LT));
+
+            let temp = ``
+            if (typeof (geoJsonPoint.properties.LT) == "number") {
+                temp = `Temperatur: ${geoJsonPoint.properties.LT}°C<br>`
+            };
+            let snow = ``
+            if (typeof (geoJsonPoint.properties.HS) == "number") {
+                snow = `Schneehöhe: ${geoJsonPoint.properties.HS}cm<br>`
+            }
+            let windspeed = ``
+            if (typeof (geoJsonPoint.properties.WG) == "number") {
+                windspeed = `Windgeschwindigkeit: ${geoJsonPoint.properties.WG * 3.6}km/h<br>`
+            }
+            let winddirection = ``
+            if (typeof (geoJsonPoint.properties.WR) == "number") {
+                winddirection = `Windrichtung: ${geoJsonPoint.properties.WR}°<br>`
+            }
+            let humidity = ``
+            if (typeof (geoJsonPoint.properties.RH) == "number") {
+                humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH}%`
+            }
+            
             let popup = `
-                <strong>${geoJsonPoint.properties.name}</strong><br>
-                (${geoJsonPoint.geometry.coordinates[2]} m ü.d.M.)
-            `;
+                <strong>${geoJsonPoint.properties.name}</strong> (${geoJsonPoint.geometry.coordinates[2]}m ü.d.M.)<br>
+                ${temp}
+                ${snow}
+                ${windspeed}
+                ${winddirection}
+                ${humidity}
+                `;
+
             return L.marker(latlng, {
                 icon: L.icon({
                     iconUrl: `icons/wifi.png`,
@@ -89,14 +120,14 @@ let drawStations = function(geojson) {
 };
 
 // Temperaturdaten
-let drawTemperature = function(geojson) {
+let drawTemperature = function (geojson) {
     L.geoJson(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.LT > -50 && geoJsonPoint.properties.LT < 50) {
                 return true;
             }
         },
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
             let popup = `
@@ -116,14 +147,14 @@ let drawTemperature = function(geojson) {
 }
 
 // Schneehöhen
-let drawSnowheight = function(geojson) {
+let drawSnowheight = function (geojson) {
     L.geoJson(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.HS >= 0 && geoJsonPoint.properties.HS < 2000) {
                 return true;
             }
         },
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
             let popup = `
@@ -143,14 +174,14 @@ let drawSnowheight = function(geojson) {
 }
 
 // Windgeschwindigkeit
-let drawWind = function(geojson) {
+let drawWind = function (geojson) {
     L.geoJson(geojson, {
-        filter: function(geoJsonPoint) {
-            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WR >= 0 /*&& geoJsonPoint.properties.WG < 300*/) {
+        filter: function (geoJsonPoint) {
+            if (geoJsonPoint.properties.WG >= 0 && geoJsonPoint.properties.WR >= 0 /*&& geoJsonPoint.properties.WG < 300*/ ) {
                 return true;
             }
         },
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
             let popup = `
@@ -159,7 +190,7 @@ let drawWind = function(geojson) {
             `;
             let color = getColor(geoJsonPoint.properties.WG, COLORS.wind);
             let deg = geoJsonPoint.properties.WR
-            
+
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
@@ -171,14 +202,14 @@ let drawWind = function(geojson) {
 }
 
 // relative Luftfeuchtigkeit
-let drawHumidity = function(geojson) {
+let drawHumidity = function (geojson) {
     L.geoJson(geojson, {
-        filter: function(geoJsonPoint) {
+        filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
                 return true;
             }
         },
-        pointToLayer: function(geoJsonPoint, latlng) {
+        pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
             let popup = `
@@ -186,7 +217,7 @@ let drawHumidity = function(geojson) {
                 (${geoJsonPoint.geometry.coordinates[2]} m ü.d.M.)
             `;
             let color = getColor(geoJsonPoint.properties.RH, COLORS.humidity);
-            
+
             return L.marker(latlng, {
                 icon: L.divIcon({
                     className: "aws-div-icon",
@@ -207,5 +238,5 @@ async function loadData(url) {
     drawSnowheight(geojson)
     drawWind(geojson)
     drawHumidity(geojson)
-}   
+}
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");

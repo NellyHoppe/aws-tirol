@@ -1,105 +1,100 @@
 const COLORS = {
-    temperature: [
-        {
-            min: -50,
-            max: -25,
-            color: "#9f80ff"
-        }, {
-            min: -25,
-            max: -20,
-            color: "##784cff"
-        }, {
-            min: -20,
-            max: -15,
-            color: "#0f5abe"
-        }, {
-            min: -15,
-            max: -10,
-            color: "#1380ff"
-        }, {
-            min: -10,
-            max: -5,
-            color: "#19cdff"
-        }, {
-            min: -5,
-            max: 0,
-            color: "#8fffff"
-        }, {
-            min: 0,
-            max: 5,
-            color: "#b0ffbc"
-        }, {
-            min: 5,
-            max: 10,
-            color: "#ffff73"
-        }, {
-            min: 10,
-            max: 15,
-            color: "#ffbe7d"
-        }, {
-            min: 15,
-            max: 20,
-            color: "#ff9b41"
-        }, {
-            min: 20,
-            max: 25,
-            color: "#ff5a41"
-        }, {
-            min: 25,
-            max: 30,
-            color: "#ff1e23"
-        }, {
-            min: 30,
-            max: 50,
-            color: "#fa3c96"
-        }
-    ],
-    snowheight: [
-        {
-            min:0,
-            max:1,
-            color: "#fff"
-        }, {
-            min:1,
-            max:10,
-            color: "#ffffb2",
-        }, {
-            min:10,
-            max:25,
-            color: "#b0ffbc",
-        }, {
-            min:25,
-            max:50,
-            color: "#8cffff",
-        }, {
-            min:50,
-            max:100,
-            color: "#19cdff",
-        }, {
-            min:100,
-            max:200,
-            color: "#1982ff",
-        }, {
-            min:200,
-            max:300,
-            color: "#0f5abe",
-        }, {
-            min:300,
-            max:400,
-            color: "#784bff",
-        }, {
-            min:400,
-            max:2000,
-            color: "#cd0feb",
-        }, 
-    ],
-    wind: [
-        {
+    temperature: [{
+        min: -50,
+        max: -25,
+        color: "#9f80ff"
+    }, {
+        min: -25,
+        max: -20,
+        color: "##784cff"
+    }, {
+        min: -20,
+        max: -15,
+        color: "#0f5abe"
+    }, {
+        min: -15,
+        max: -10,
+        color: "#1380ff"
+    }, {
+        min: -10,
+        max: -5,
+        color: "#19cdff"
+    }, {
+        min: -5,
+        max: 0,
+        color: "#8fffff"
+    }, {
+        min: 0,
+        max: 5,
+        color: "#b0ffbc"
+    }, {
+        min: 5,
+        max: 10,
+        color: "#ffff73"
+    }, {
+        min: 10,
+        max: 15,
+        color: "#ffbe7d"
+    }, {
+        min: 15,
+        max: 20,
+        color: "#ff9b41"
+    }, {
+        min: 20,
+        max: 25,
+        color: "#ff5a41"
+    }, {
+        min: 25,
+        max: 30,
+        color: "#ff1e23"
+    }, {
+        min: 30,
+        max: 50,
+        color: "#fa3c96"
+    }],
+    snowheight: [{
+        min: 0,
+        max: 1,
+        color: "#fff"
+    }, {
+        min: 1,
+        max: 10,
+        color: "#ffffb2",
+    }, {
+        min: 10,
+        max: 25,
+        color: "#b0ffbc",
+    }, {
+        min: 25,
+        max: 50,
+        color: "#8cffff",
+    }, {
+        min: 50,
+        max: 100,
+        color: "#19cdff",
+    }, {
+        min: 100,
+        max: 200,
+        color: "#1982ff",
+    }, {
+        min: 200,
+        max: 300,
+        color: "#0f5abe",
+    }, {
+        min: 300,
+        max: 400,
+        color: "#784bff",
+    }, {
+        min: 400,
+        max: 2000,
+        color: "#cd0feb",
+    }, ],
+    wind: [{
             min: -100,
-            max: -0.000001, 
+            max: -0.000001,
             color: "#ffffff"
-        },        
-            {
+        },
+        {
             min: 0,
             max: 5,
             color: "#ffff64"
@@ -129,39 +124,37 @@ const COLORS = {
             color: "#ff3232"
         }
     ],
-    humidity: [
-        {
-            min: 0,
-            max: 30,
-            color: "#EEE"
-        }, {
-            min: 30,
-            max: 40,
-            color: "#DDD"
-        }, {
-            min: 40,
-            max: 50,
-            color: "#C6C9CE"
-        }, {
-            min: 50,
-            max: 60,
-            color: "#BBB"
-        }, {
-            min: 60,
-            max: 70,
-            color: "#AAC"
-        }, {
-            min: 70,
-            max: 80,
-            color: "#9998DD"
-        }, {
-            min: 80,
-            max: 90,
-            color: "#8788EE"
-        }, {
-            min: 90,
-            max: 101,
-            color: "#7677E1"
-        }
-    ]
+    humidity: [{
+        min: 0,
+        max: 30,
+        color: "#EEE"
+    }, {
+        min: 30,
+        max: 40,
+        color: "#DDD"
+    }, {
+        min: 40,
+        max: 50,
+        color: "#C6C9CE"
+    }, {
+        min: 50,
+        max: 60,
+        color: "#BBB"
+    }, {
+        min: 60,
+        max: 70,
+        color: "#AAC"
+    }, {
+        min: 70,
+        max: 80,
+        color: "#9998DD"
+    }, {
+        min: 80,
+        max: 90,
+        color: "#8788EE"
+    }, {
+        min: 90,
+        max: 100,
+        color: "#7677E1"
+    }]
 }
