@@ -248,8 +248,8 @@ L.control.rainviewer({
     nextButtonText: '>',
     playStopButtonText: 'Play/Stop',
     prevButtonText: '<',
-    positionSliderLabelText: "Hour:",
-    opacitySliderLabelText: "Opacity:",
+    positionSliderLabelText: "Stunde:",
+    opacitySliderLabelText: "Transparenz:",
     animationInterval: 500,
     opacity: 0.5
 }).addTo(map);
