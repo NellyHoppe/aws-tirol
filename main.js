@@ -76,7 +76,7 @@ let drawStations = function (geojson) {
         pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
             // console.log(geoJsonPoint.geometry.coordinates[2]);
-            console.log(typeof (geoJsonPoint.properties.LT));
+            // console.log(typeof (geoJsonPoint.properties.LT));
 
             let temp = ``
             if (typeof (geoJsonPoint.properties.LT) == "number") {
@@ -96,9 +96,9 @@ let drawStations = function (geojson) {
             }
             let humidity = ``
             if (typeof (geoJsonPoint.properties.RH) == "number") {
-                humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH}%`
+                humidity = `Relative Luftfeuchtigkeit: ${geoJsonPoint.properties.RH}%<br>`
             }
-            
+
             let popup = `
                 <strong>${geoJsonPoint.properties.name}</strong> (${geoJsonPoint.geometry.coordinates[2]}m ü.d.M.)<br>
                 ${temp}
@@ -106,6 +106,7 @@ let drawStations = function (geojson) {
                 ${windspeed}
                 ${winddirection}
                 ${humidity}
+                <a href="https://wiski.tirol.gv.at/lawine/grafiken/1100/standard/dreitage/${geoJsonPoint.properties.plot}.png"  target="_blank">Wetterverlaufsgrafik</a>
                 `;
 
             return L.marker(latlng, {
