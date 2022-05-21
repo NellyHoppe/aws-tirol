@@ -15,7 +15,7 @@ let startLayer = L.tileLayer("https://static.avalanche.report/tms/{z}/{x}/{y}.we
 let overlays = {
     stations: L.featureGroup(),
     temperature: L.featureGroup(),
-    precipitation: L.featureGroup(),
+    humidity: L.featureGroup(),
     snowheight: L.featureGroup(),
     wind: L.featureGroup(),
 };
@@ -36,7 +36,7 @@ let layerControl = L.control.layers({
 }, {
     "Wetterstationen": overlays.stations,
     "Temperatur": overlays.temperature,
-    "Niederschlag": overlays.precipitation,
+    "Relative Luftfeuchtigkeit": overlays.humidity,
     "Schneehöhe": overlays.snowheight,
     "Wind": overlays.wind
 }).addTo(map);
@@ -170,6 +170,33 @@ let drawWind = function(geojson) {
     }).addTo(overlays.wind);
 }
 
+// relative Luftfeuchtigkeit
+let drawHumidity = function(geojson) {
+    L.geoJson(geojson, {
+        filter: function(geoJsonPoint) {
+            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
+                return true;
+            }
+        },
+        pointToLayer: function(geoJsonPoint, latlng) {
+            // L.marker(latlng).addTo(map)
+            // console.log(geoJsonPoint.geometry.coordinates[2]);
+            let popup = `
+                <strong>${geoJsonPoint.properties.name}</strong><br>
+                (${geoJsonPoint.geometry.coordinates[2]} m ü.d.M.)
+            `;
+            let color = getColor(geoJsonPoint.properties.RH, COLORS.humidity);
+            
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: "aws-div-icon",
+                    html: `<span style="background-color:${color}"> ${geoJsonPoint.properties.RH.toFixed(0)}</span>`
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlays.humidity);
+}
+
 // Wetterstationen
 async function loadData(url) {
     let response = await fetch(url);
@@ -179,5 +206,6 @@ async function loadData(url) {
     drawTemperature(geojson)
     drawSnowheight(geojson)
     drawWind(geojson)
+    drawHumidity(geojson)
 }   
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
