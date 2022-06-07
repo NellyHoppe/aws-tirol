@@ -206,7 +206,7 @@ let drawWind = function (geojson) {
 let drawHumidity = function (geojson) {
     L.geoJson(geojson, {
         filter: function (geoJsonPoint) {
-            if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
+            if (geoJsonPoint.properties.RH >= 0) {
                 return true;
             }
         },
